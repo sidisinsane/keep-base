@@ -1,0 +1,62 @@
+# .pre-commit-config.yaml
+# Lint-only hooks — no auto-fixing. Formatters (dprint, ruff format,
+# pyproject-fmt, yamlfix) are intentionally excluded; run `make keep/tidy`
+# for formatting passes.
+#
+# Install hooks:  uv run pre-commit install
+# Run manually:   uv run pre-commit run --all-files
+repos:
+  # ---------------------------------------------------------------------------
+  # Python — ruff (lint + format check)
+  # Pinned to the same version declared in pyproject.toml [dependency-groups].
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.11
+    hooks:
+      # Format compliance check — fails if ruff format would make changes.
+      - id: ruff-format
+        args: [ --check ]
+        types_or: [ python, pyi ]
+        files: ^src/
+      # Lint — no --fix; mirrors `make py/lint`.
+      - id: ruff-check
+        types_or: [ python, pyi ]
+        files: ^src/
+
+  # ---------------------------------------------------------------------------
+  # Python — bandit (security)
+  # Uses the official PyCQA hook; args mirror `make py/security`.
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.9.4
+    hooks:
+      - id: bandit
+        args:
+          - --config
+          - pyproject.toml
+          - --severity-level
+          - medium
+          - --confidence-level
+          - low
+        files: ^src/keep/
+        types: [ python ]
+
+  # ---------------------------------------------------------------------------
+  # YAML — yamllint
+  # Config is auto-detected via yamllint.yml at the repo root.
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        args: [ -c, .yamllint.yml ]
+
+  # ---------------------------------------------------------------------------
+  # Markdown — rumdl
+  # Official pre-commit mirror; lint-only (no --fix).
+  # Config is auto-detected via rumdl.toml at the repo root.
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: v0.1.73
+    hooks:
+      - id: rumdl

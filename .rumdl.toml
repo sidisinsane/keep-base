@@ -1,0 +1,72 @@
+[global]
+exclude = [
+  "tests/fixtures/invalid/**",
+]
+
+respect_gitignore = true
+flavor = "standard"
+output_format = "json-lines"
+
+# Rules disabled because they are handled by dprint or ignored
+disable = [
+  "MD013", # Line length (handled by dprint)
+  "MD024", # Duplicate heading content
+]
+
+# ============================================================
+# RULE CONFIGURATIONS
+# ============================================================
+
+[MD003]
+style = "atx"
+
+[MD004]
+style = "dash"
+
+[MD007]
+indent = 2
+
+[MD009]
+br-spaces = 2
+list-item-empty-lines = false
+
+[MD012]
+maximum = 1
+
+[MD022]
+lines-above = 1
+lines-below = 1
+
+[MD025]
+level = 1
+front-matter-title = ""
+
+[MD029]
+style = "ordered"
+
+[MD033]
+allowed-elements = [
+  "b",
+  "br",
+  "cite",
+  "details",
+  "div",
+  "img",
+  "s",
+  "sub",
+  "sup",
+  "summary",
+  "u",
+]
+
+[MD041]
+level = 1
+
+[MD046]
+style = "fenced"
+
+[MD049]
+style = "asterisk"
+
+[MD050]
+style = "asterisk"

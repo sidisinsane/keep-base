@@ -1,0 +1,37 @@
+# .yamlfix.toml
+
+# ============================================================
+# GENERAL SETTINGS
+# ============================================================
+# 1. Define the character to use
+quote_representation = '"'
+# 2. Force quoting on the values (the part after the colon)
+quote_basic_values = false
+# 3. Ensure it doesn't try to keep the old single quotes
+preserve_quotes = false
+
+# Corresponds to your line-length rule
+line_length = 80
+
+# Corresponds to indentation: enable
+indent_mapping = 2
+indent_sequence = 4
+indent_offset = 2
+
+# ============================================================
+# SPACING & FORMATTING
+# ============================================================
+
+# Corresponds to braces/brackets max-spaces-inside
+# Note: yamlfix is opinionated here and usually defaults to 0 or 1
+# to stay consistent with modern YAML standards.
+explicit_start = false # Corresponds to document-start: disable
+explicit_end = false # Corresponds to document-end: disable
+
+# ============================================================
+# BEHAVIOR
+# ============================================================
+
+# Corresponds to your yaml-files list
+# yamlfix usually takes paths via CLI, but you can define patterns
+# if using it via a task runner.

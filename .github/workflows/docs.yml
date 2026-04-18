@@ -1,0 +1,45 @@
+# .github/workflows/docs.yml
+# Build Sphinx documentation and publish to GitHub Pages on version tags.
+name: Docs
+"on":
+  push:
+    tags:
+      - v*
+# Allow one concurrent deployment to GitHub Pages.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install dependencies
+        run: uv sync --dev
+      - name: Build documentation
+        run: uv run sphinx-build -b html docs docs/_build/html
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_build/html
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,138 @@
+# Keep Schema
+# -----------
+# Immutable schema definition for the Keep app. This file is app-owned and
+# never edited by users. It defines what is structurally valid across all
+# Keep workspaces, regardless of workspace-level configuration.
+#
+# Versioned via `schema_version`. A breaking change increments this value
+# and the app will reject a mismatched schema at startup.
+schema_version: 1
+# ---------------------------------------------------------------------------
+# Core entity
+# ---------------------------------------------------------------------------
+# Every document in a Keep workspace must satisfy the core schema.
+# No exceptions. Extensions are additive on top of this — they never
+# override or relax core rules.
+core:
+  required: [ slug, title, date_created, status, tags, kind ]
+  fields:
+    slug:
+      type: string
+    title:
+      type: string
+    date_created:
+      type: isodate
+    status:
+      type: string
+      enum: [ draft, review, published, canon ]
+    private:
+      type: boolean
+      default: false
+    tags:
+      type: list
+    kind:
+      # Semantic label, not structural type. Drives extension selection.
+      # Examples: recipe, person, experiment, prd, note
+      type: string
+    summary:
+      # One-line description authored by the LLM during ingest.
+      # Read by the tool to populate index.md. Optional.
+      type: string
+    relations:
+      type: list
+      items:
+        target:
+          # Must resolve to an existing slug. Dangling slugs are a hard
+          # violation (see linting.hard_violations below).
+          type: string
+        type:
+          type: string
+          enum:
+            - derived_from
+            - extends
+            - supports
+            - contradicts
+            - inspired_by
+            - supersedes
+            - addresses_gap
+            - superseded_by # tool-injected only — never authored manually
+        auto_injected:
+          # True when this relation was written by the tool rather than
+          # authored by a human or LLM. Set automatically during reciprocal
+          # injection. Never write this manually.
+          type: boolean
+          default: false
+# ---------------------------------------------------------------------------
+# Statuses
+# ---------------------------------------------------------------------------
+# Describes the meaning and validation level of each lifecycle status.
+# Used by the linter to determine which validation rules apply.
+statuses:
+  draft:
+    description: >
+      Raw capture, not yet categorised. Low friction — only core fields
+      are validated.
+    validation: core
+  review:
+    description: >
+      Categorised, kind assigned, relations drafted. Awaiting human
+      assessment. Core and applicable extension fields are validated.
+    validation: core_and_extensions
+  published:
+    description: >
+      Wiki-quality, active member. Full validation required. Linter must
+      pass with zero hard violations before promotion.
+    validation: full
+    requires_clean_lint: true
+  canon:
+    description: >
+      Settled, load-bearing, gravitational. Other documents orbit it.
+      Full validation required. Linter must pass with zero hard violations
+      before promotion.
+    validation: full
+    requires_clean_lint: true
+# ---------------------------------------------------------------------------
+# Relation symmetry
+# ---------------------------------------------------------------------------
+# Defines whether each relation type requires a reciprocal in the target
+# document. The tool auto-injects missing reciprocals for reciprocal types
+# rather than flagging them for the author to fix manually.
+relation_symmetry:
+  derived_from:
+    symmetric: false
+  extends:
+    symmetric: false
+  supports:
+    symmetric: false
+  contradicts:
+    symmetric: true
+    reciprocal_type: contradicts
+  inspired_by:
+    symmetric: false
+  supersedes:
+    symmetric: true
+    reciprocal_type: superseded_by # tool-injected; not a user-facing type
+  addresses_gap:
+    symmetric: false
+  superseded_by:
+    symmetric: false # the injected side is always directional
+# ---------------------------------------------------------------------------
+# Linting
+# ---------------------------------------------------------------------------
+# Hard violations block graduation to `published` or `canon`.
+# Soft violations are flagged but do not block graduation.
+linting:
+  hard_violations:
+    dangling_slug:
+      description: >
+        A target in relations does not resolve to an existing document slug.
+    private_target_in_public_doc:
+      description: >
+        A document with private: true appears as a target in a non-private
+        document's relations. The inverse is permitted — a private document
+        may relate to a public one.
+    missing_reciprocal:
+      description: >-
+        A contradicts or supersedes relation exists without the corresponding
+        reciprocal in the target document. Should only occur if auto-injection
+        failed.

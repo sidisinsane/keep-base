@@ -1,0 +1,28 @@
+# After how many columns split arrays/dicts into multiple lines and wrap long strings;
+# use a trailing comma in arrays to force multiline format instead of lowering this value
+column_width = 120
+
+# Number of spaces for indentation
+indent = 2
+
+# Keep full version numbers (e.g., 1.0.0 instead of 1.0) in dependency specifiers
+keep_full_version = false
+
+# Automatically generate Python version classifiers based on requires-python
+# Set to false to disable automatic classifier generation
+generate_python_version_classifiers = true
+
+# Maximum Python version for generating version classifiers
+max_supported_python = "3.14"
+
+# Table format: "short" collapses sub-tables to dotted keys, "long" expands to [table.subtable] headers
+table_format = "long"
+
+# List of tables to force expand regardless of table_format setting
+expand_tables = []
+
+# List of tables to force collapse regardless of table_format or expand_tables settings
+collapse_tables = ["project.authors"]
+
+# List of key patterns to skip string wrapping (supports wildcards like *.parse or tool.bumpversion.*)
+skip_wrap_for_keys = []

@@ -1,0 +1,63 @@
+[build-system]
+build-backend = "uv_build"
+requires = ["uv-build>=0.11,<0.12"]
+
+[project]
+name = "keep-base"
+version = "0.1.0"
+description = "Personal wiki tooling."
+readme = "README.md"
+authors = [{ name = "Dirk Sidney Jansen", email = "sidisinsane@users.noreply.github.com" }]
+requires-python = ">=3.12"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+  "ruamel-yaml>=0.19.1",
+]
+[project.scripts]
+keep = "keep.cli:main"
+
+[dependency-groups]
+dev = [
+  "bandit>=1.9.4",
+  "dprint-py>=0.53.1",
+  "furo>=2025.12.19",
+  "pre-commit>=4.5.1",
+  "pylint>=4.0.5",
+  "pyproject-fmt>=2.21.1",
+  "pytest>=9.0.3",
+  "pytest-cov>=7.1",
+  "ruff>=0.15.11",
+  "rumdl>=0.1.73",
+  "sphinx>=9.1",
+  "sphinx-pyproject>=0.3",
+  "yamlfix>=1.19.1",
+  "yamllint>=1.38",
+]
+
+[tool.uv.build-backend]
+module-name = "keep"
+
+# Note: Bandit's severity and confidence are NOT supported in pyproject.toml —
+# they are silently ignored. Pass them as CLI flags instead.
+[tool.bandit]
+targets = ["src/keep"]
+exclude_dirs = ["tests"]
+skips = ["B101"]
+
+[tool.pytest]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=keep --cov-report=term-missing --cov-fail-under=80"
+
+[tool.coverage]
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+[tool.coverage.run]
+omit = ["keep/data/*"]
+source = ["keep"]

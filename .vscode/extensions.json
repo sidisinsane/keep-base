@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "dprint.dprint",
+    "nwgh.bandit",
+    "redhat.vscode-yaml"
+  ]
+}

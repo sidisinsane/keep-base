@@ -1,0 +1,22 @@
+# yamllint disable rule:line-length
+# .github/workflows/mirror.yml
+# Push a read-only mirror to Codeberg on every push to main.
+name: Mirror
+"on":
+  push:
+    branches: [ main ]
+jobs:
+  mirror:
+    name: Mirror to Codeberg
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Fetch full history so the mirror is complete.
+          fetch-depth: 0
+      - name: Push mirror to Codeberg
+        run: >-
+          git push
+          --mirror
+          https://sidisinsane:${{ secrets.CODEBERG_TOKEN }}@codeberg.org/sidisinsane/keep-base.git

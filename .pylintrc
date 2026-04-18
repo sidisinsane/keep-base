@@ -1,0 +1,38 @@
+[MASTER]
+# Use multiple processes to speed up Pylint.
+jobs=1
+
+# Add the src directory to the Python path so Pylint can resolve imports.
+init-hook='import sys; sys.path.insert(0, "src")'
+
+# Do not lint the tests directory with the same strictness — pytest patterns
+# like fixture injection trigger false positives that are not suppressible
+# without disabling useful rules globally.
+ignore-paths=^tests/.*$
+
+[MESSAGES CONTROL]
+# Disable rules already covered by ruff, or not applicable to this project.
+disable=
+    C0114,  # missing-module-docstring     (covered by ruff D)
+    C0115,  # missing-class-docstring      (covered by ruff D)
+    C0116,  # missing-function-docstring   (covered by ruff D)
+    C0301,  # line-too-long                (covered by ruff E501)
+    C0303,  # trailing-whitespace          (covered by ruff W)
+    C0411,  # wrong-import-order           (covered by ruff I)
+    C0412,  # ungrouped-imports            (covered by ruff I)
+    C0413,  # wrong-import-position        (covered by ruff I)
+    C1803,  # use-implicit-booleaness-not-comparison
+    W0611,  # unused-import                (covered by ruff F401)
+    W0613,  # unused-argument
+    W0621,  # redefined-outer-name         (false positive with pytest fixtures)
+
+[DESIGN]
+# Raise the instance attribute limit to accommodate well-justified dataclasses.
+max-attributes=12
+
+[TYPECHECK]
+# Allow Pylint to find installed packages in the virtual environment.
+ignored-modules=ruamel,pytest
+
+[FORMAT]
+max-line-length=80

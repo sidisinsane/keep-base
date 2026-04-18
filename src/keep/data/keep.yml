@@ -1,0 +1,35 @@
+# Keep — default workspace configuration
+# ----------------------------------------
+# This file defines the app defaults for all configurable workspace settings.
+# To customise, copy relevant sections into your workspace's keep.yml.
+# Workspace values take precedence over these defaults.
+#
+# Extensions defined here are app-provided examples. Add, remove, or modify
+# extensions in your workspace keep.yml to suit your needs.
+#
+# schema_version must match the version in the app's schema.yml. The app
+# will reject a mismatch at startup to prevent silent incompatibilities.
+schema_version: 1
+staleness:
+  draft: { days: 14 }
+  review: { days: 28 }
+  published: { days: 180 }
+  canon: { days: null } # canon documents never go stale
+completeness:
+  min_ratio: 0.6
+  required_fields: [ kind, tags ]
+  required_relations: 1
+extensions:
+  genealogy:
+    applies_when: { kind: person }
+    additional_required: [ birth_date, family_name ]
+    fields:
+      birth_date: { type: isodate }
+      death_date: { type: isodate }
+      family_name: { type: string }
+  experiment:
+    applies_when: { kind: experiment }
+    additional_required: [ hypothesis, outcome ]
+    fields:
+      hypothesis: { type: string }
+      outcome: { type: string, enum: [ succeeded, failed, inconclusive ] }

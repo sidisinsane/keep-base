@@ -1,0 +1,10 @@
+schema_version: 1
+staleness:
+  draft: { days: 7 }
+  review: { days: 14 }
+  published: { days: 90 }
+  canon: { days: null }
+completeness:
+  min_ratio: 0.7
+  required_fields: [ kind, tags ]
+  required_relations: 1

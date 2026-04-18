@@ -1,0 +1,71 @@
+{
+  "editor.rulers": [{ "column": 80, "color": "#cbc8c3" }],
+  "files.associations": {
+    ".gitignore": "shellscript",
+    ".pylintrc": "ini",
+    ".bandit": "ini",
+    "*.make": "makefile",
+    "LICENSE": "plaintext"
+  },
+  "bandit.importStrategy": "fromEnvironment",
+  "bandit.path": [".venv/bin/bandit"],
+  "bandit.args": [
+    "--config=pyproject.toml",
+    "--severity-level=medium",
+    "--confidence-level=low"
+  ],
+  "bandit.ignorePatterns": [
+    "**/tests/**",
+    "**/test_*.py"
+  ],
+  "bandit.severity": {
+    "LOW": "Information",
+    "MEDIUM": "Warning",
+    "HIGH": "Error"
+  },
+  "pylint.importStrategy": "fromEnvironment",
+  "python.analysis.extraPaths": [
+    ".venv/lib/python3.12/site-packages"
+  ],
+  "ruff.configurationPreference": "filesystemFirst",
+  "ruff.path": [".venv/bin/ruff"],
+  "yaml.format.enable": true,
+  "yaml.schemaStore.enable": true,
+  "yaml.validate": true,
+  "[json]": {
+    "editor.defaultFormatter": "dprint.dprint",
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSave": true,
+    "editor.rulers": [{ "column": 120, "color": "#9f0af5" }]
+  },
+  "[makefile]": {
+    "editor.rulers": [{ "column": 80, "color": "#9f0af5" }]
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "dprint.dprint",
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSave": true,
+    "editor.rulers": [{ "column": 80, "color": "#9f0af5" }]
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.rulers": [{ "column": 80, "color": "#9f0af5" }]
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "dprint.dprint",
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSave": true,
+    "editor.rulers": [{ "column": 80, "color": "#9f0af5" }]
+  },
+  "[toml]": {
+    // "editor.defaultFormatter": "dprint.dprint",
+    // "editor.formatOnSaveMode": "file",
+    // "editor.formatOnSave": true,
+    "editor.rulers": [{ "column": 120, "color": "#9f0af5" }]
+  }
+}

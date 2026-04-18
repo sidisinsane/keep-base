@@ -1,0 +1,56 @@
+{
+  "lineWidth": 80,
+  "json": {
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "useTabs": false,
+    "newLineKind": "lf",
+    "commentLine.forceSpaceAfterSlashes": true,
+    "preferSingleLine": false,
+    "trailingCommas": "never"
+  },
+  "markdown": {
+    "lineWidth": 80,
+    "newLineKind": "lf",
+    "emphasisKind": "asterisks",
+    "strongKind": "asterisks",
+    "unorderedListKind": "dashes",
+    "headingKind": "atx",
+    "textWrap": "always"
+  },
+  "toml": {
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "useTabs": false,
+    "newLineKind": "lf",
+    "comment.forceLeadingSpace": true
+  },
+  "yaml": {
+    "printWidth": 80,
+    "indentWidth": 2,
+    "lineBreak": "lf",
+    "quotes": "preferDouble",
+    "trailingComma": true,
+    "formatComments": true,
+    "indentBlockSequenceInMap": true,
+    "braceSpacing": true,
+    "bracketSpacing": true,
+    "dashSpacing": "oneSpace",
+    "preferSingleLine": false,
+    "trimTrailingWhitespaces": true,
+    "trimTrailingZero": false,
+    "proseWrap": "always"
+  },
+  "excludes": [
+    "**/*-lock.json",
+    ".mypy_cache",
+    ".venv",
+    "node_modules"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/markdown-0.21.1.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.6.0.wasm",
+    "https://plugins.dprint.dev/json-0.21.3.wasm",
+    "https://plugins.dprint.dev/toml-0.7.0.wasm"
+  ]
+}

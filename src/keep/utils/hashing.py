@@ -71,6 +71,6 @@ def _hash_dict(data: dict[str, Any]) -> str:
         Eight-character hex digest.
     """
     serialised = json.dumps(
-        data, sort_keys=True, ensure_ascii=True, default=str
+        data, sort_keys=True, ensure_ascii=False, default=str
     )
     return hashlib.sha256(serialised.encode()).hexdigest()[:8]

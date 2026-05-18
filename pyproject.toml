@@ -4,7 +4,7 @@ requires = ["uv-build>=0.11,<0.12"]
 
 [project]
 name = "keep-base"
-version = "0.1.0"
+version = "0.2.0"
 description = "Personal wiki tooling."
 readme = "README.md"
 authors = [{ name = "Dirk Sidney Jansen", email = "sidisinsane@users.noreply.github.com" }]

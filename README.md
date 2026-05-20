@@ -1,5 +1,10 @@
 # Keep
 
+> **Deprecated.** This Python implementation is no longer maintained. It has
+> been superseded by [keep-go](https://github.com/sidisinsane/keep-go), a full
+> rewrite in Go with improved architecture and schema-driven validation. Please
+> use keep-go for all new and existing workspaces.
+
 Keep is a personal wiki tool for people who think carefully and want their
 thinking to compound over time. You write Markdown documents with structured
 frontmatter. Keep reads that frontmatter and produces derived artefacts — a
